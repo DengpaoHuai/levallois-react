@@ -1,69 +1,66 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 export type Specie = {
   name: string;
   classification: string;
   designation: string;
   average_height: string;
+  url: string;
 };
 
 type SpecieResponse = {
   results: Specie[];
   count: number;
-  next: string;
-  previous: string;
+  next: string | null;
+  previous: string | null;
 };
 
 const SpeciesPage = () => {
-  const [species, setSpecies] = useState<Specie[]>([]);
-  const [page, setPage] = useState(1);
-  const [count, setCount] = useState(0);
+  const [speciesResponse, setSpeciesResponse] = useState<SpecieResponse>({
+    results: [],
+    count: 0,
+    next: null,
+    previous: null,
+  });
+
+  const getData = async (url: string) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    setSpeciesResponse(data);
+  };
 
   useEffect(() => {
-    fetch("https://swapi.dev/api/species?page=" + page)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setSpecies(data.results);
-        setCount(data.count);
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-      });
-  }, [page]);
+    getData("https://swapi.dev/api/species");
+  }, []);
 
   return (
-    <div>
+    <>
       <h1>Species Page</h1>
-      {species.map((specie) => {
+      {speciesResponse.results.map((specie) => {
         return (
-          <div>
+          <Fragment key={specie.url}>
             <h2>{specie.name}</h2>
             <p>Classification: {specie.classification}</p>
             <p>Designation: {specie.designation}</p>
             <p>Average Height: {specie.average_height}</p>
-          </div>
+          </Fragment>
         );
       })}
       <button
-        disabled={page === 1}
-        onClick={() => {
-          setPage(page - 1);
-        }}
+        disabled={!speciesResponse.previous}
+        onClick={() =>
+          speciesResponse.previous && getData(speciesResponse.previous)
+        }
       >
         Previous
       </button>
       <button
-        disabled={page === Math.ceil(count / 10)}
-        onClick={() => {
-          setPage(page + 1);
-        }}
+        disabled={!speciesResponse.next}
+        onClick={() => speciesResponse.next && getData(speciesResponse.next)}
       >
         Next
       </button>
-    </div>
+    </>
   );
 };
 
