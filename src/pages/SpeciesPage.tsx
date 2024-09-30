@@ -16,26 +16,27 @@ type SpecieResponse = {
 
 const SpeciesPage = () => {
   const [species, setSpecies] = useState<Specie[]>([]);
-  const [refresh, setRefresh] = useState(false);
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    fetch("https://swapi.dev/api/species/")
+    fetch("https://swapi.dev/api/species?page=" + page)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         console.log(data);
         setSpecies(data.results);
+        setCount(data.count);
       })
       .catch((error) => {
         console.log("Error: ", error);
       });
-  }, [refresh]);
+  }, [page]);
 
   return (
     <div>
       <h1>Species Page</h1>
-      <button onClick={() => setRefresh(!refresh)}>Refresh</button>
       {species.map((specie) => {
         return (
           <div>
@@ -46,6 +47,22 @@ const SpeciesPage = () => {
           </div>
         );
       })}
+      <button
+        disabled={page === 1}
+        onClick={() => {
+          setPage(page - 1);
+        }}
+      >
+        Previous
+      </button>
+      <button
+        disabled={page === Math.ceil(count / 10)}
+        onClick={() => {
+          setPage(page + 1);
+        }}
+      >
+        Next
+      </button>
     </div>
   );
 };
