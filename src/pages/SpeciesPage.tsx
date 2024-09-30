@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export type Specie = {
   name: string;
@@ -22,6 +23,7 @@ const SpeciesPage = () => {
     next: null,
     previous: null,
   });
+  const navigate = useNavigate();
 
   const getData = async (url: string) => {
     const response = await fetch(url);
@@ -33,8 +35,33 @@ const SpeciesPage = () => {
     getData("https://swapi.dev/api/species");
   }, []);
 
+  useEffect(() => {
+    const handleScroll = (e: Event) => {
+      console.log(e);
+    };
+    document.addEventListener("scroll", handleScroll);
+    return () => {
+      console.log("je suis démonté");
+      document.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <>
+    <div
+      style={{
+        height: "500vh",
+      }}
+    >
+      <a href="/welcome">welcome</a>
+      <Link to="/welcome">welcome</Link>
+      <button
+        onClick={() => {
+          // window.location.href = "/welcome";
+          navigate("/welcome");
+        }}
+      >
+        redirect
+      </button>
       <h1>Species Page</h1>
       {speciesResponse.results.map((specie) => {
         return (
@@ -60,7 +87,7 @@ const SpeciesPage = () => {
       >
         Next
       </button>
-    </>
+    </div>
   );
 };
 

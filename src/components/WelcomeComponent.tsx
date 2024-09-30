@@ -3,8 +3,8 @@ import viteLogo from "/vite.svg";
 import "../App.css";
 
 type WelcomeComponentProps = {
-  title: string;
-  children: React.ReactNode;
+  title?: string;
+  children?: React.ReactNode;
 };
 
 const WelcomeComponent: React.FC<WelcomeComponentProps> = ({
@@ -12,7 +12,11 @@ const WelcomeComponent: React.FC<WelcomeComponentProps> = ({
   children,
 }) => {
   return (
-    <div>
+    <div
+      style={{
+        height: "500vh",
+      }}
+    >
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />

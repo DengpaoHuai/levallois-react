@@ -1,9 +1,9 @@
+import { RouterProvider } from "react-router-dom";
 import "./App.css";
-import CounterComponent from "./components/CounterComponent";
-import SpeciesPage from "./pages/SpeciesPage";
+import router from "./router/router";
 
 function App() {
-  return <SpeciesPage></SpeciesPage>;
+  return <RouterProvider router={router}></RouterProvider>;
 }
 
 export default App;
