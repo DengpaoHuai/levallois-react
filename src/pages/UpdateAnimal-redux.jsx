@@ -7,15 +7,15 @@ import FormWrapper from "../components/form/FormWrapper";
 import CustomField from "../components/form/CustomField";
 import { useDispatch, useSelector } from "react-redux";
 import { editAnimalById } from "../store/actions/animalAction";
-import useAnimals from "../zustand/useAnimalStore";
 
 const UpdateAnimal = () => {
   // const data = useLoaderData();
   // useselector
+  const dispatch = useDispatch();
   const { id } = useParams();
-  const { getAnimalById, editAnimal } = useAnimals();
-  const animal = getAnimalById(id);
-
+  const animal = useSelector((state) =>
+    state.animals.find((item) => item._id === id)
+  );
   const navigate = useNavigate();
   const iniatialValues = {
     name: animal.name,
@@ -26,7 +26,7 @@ const UpdateAnimal = () => {
 
   const onSubmit = (values) => {
     console.log(values);
-    editAnimal(id, values).then(() => {
+    dispatch(editAnimalById(id, values)).then(() => {
       navigate("/animals");
     });
   };

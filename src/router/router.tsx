@@ -4,6 +4,9 @@ import WelcomeComponent from "../components/WelcomeComponent";
 import CreateAnimal from "../pages/CreateAnimal";
 import AnimalsScreen from "../pages/AnimalsScreen";
 import UpdateAnimal from "../pages/UpdateAnimal";
+import crudcrud from "../services/crudcrud.instance";
+import { useAnimalStore } from "../zustand/useAnimalStore";
+import { getAnimalsList } from "./loaders/animalsLoader";
 
 const router = createBrowserRouter([
   {
@@ -24,14 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/update-animal/:id",
-    /*loader: async ({ params }) => {
-    const response = await fetch(
-        "https://crudcrud.com/api/b680a69bf8054e18bf625f1f75626985/animals/" +
-          params.id
-      );
-      const data = await response.json();
-      return data;
-    },*/
+    loader: getAnimalsList,
     element: <UpdateAnimal></UpdateAnimal>,
   },
 ]);

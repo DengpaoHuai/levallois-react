@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { getAllAnimals } from "../services/animal.service";
 import crudcrud from "../services/crudcrud.instance";
 
-const useAnimalStore = create((set) => ({
+export const useAnimalStore = create((set) => ({
   animals: [],
   setAllAnimals: (animals) => set({ animals }),
   deleteAnimalById: (id) =>
@@ -14,11 +14,28 @@ const useAnimalStore = create((set) => ({
     set((state) => ({
       animals: [...state.animals, animal],
     })),
+  updateAnimal: (id, animal) => {
+    set((state) => ({
+      animals: state.animals.map((a) =>
+        a._id === id
+          ? {
+              ...a,
+              ...animal,
+            }
+          : a
+      ),
+    }));
+  },
 }));
 
 const useAnimals = () => {
-  const { setAllAnimals, deleteAnimalById, createAnimal, ...params } =
-    useAnimalStore();
+  const {
+    setAllAnimals,
+    deleteAnimalById,
+    createAnimal,
+    updateAnimal,
+    ...params
+  } = useAnimalStore();
 
   useEffect(() => {
     if (params.animals.length > 0) return;
@@ -37,7 +54,16 @@ const useAnimals = () => {
     createAnimal(response.data);
   };
 
-  return { ...params, deleteAnimal, addAnimal };
+  const getAnimalById = (id) => {
+    return params.animals.find((animal) => animal._id === id);
+  };
+
+  const editAnimal = async (id, animal) => {
+    await crudcrud.put(`/animals/${id}`, animal);
+    updateAnimal(id, animal);
+  };
+
+  return { ...params, deleteAnimal, addAnimal, getAnimalById, editAnimal };
 };
 
 export default useAnimals;
