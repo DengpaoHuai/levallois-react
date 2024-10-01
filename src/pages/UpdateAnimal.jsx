@@ -1,23 +1,26 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { createAnimal } from "../services/animal.service";
+import { createAnimal, updateAnimal } from "../services/animal.service";
 import FormWrapper from "../components/form/FormWrapper";
 import CustomField from "../components/form/CustomField";
 
-const CreateAnimal = () => {
+const UpdateAnimal = () => {
+  const data = useLoaderData();
+  const { id, toto } = useParams();
+  console.log(toto);
   const navigate = useNavigate();
   const iniatialValues = {
-    name: "",
-    classification: "",
-    designation: "",
-    averageHeight: "",
+    name: data.name,
+    classification: data.classification,
+    designation: data.designation,
+    averageHeight: data.averageHeight,
   };
 
   const onSubmit = (values) => {
     console.log(values);
-    createAnimal(values).then(() => {
+    updateAnimal(id, values).then(() => {
       navigate("/animals");
     });
   };
@@ -53,4 +56,4 @@ const CreateAnimal = () => {
   );
 };
 
-export default CreateAnimal;
+export default UpdateAnimal;
