@@ -7,9 +7,9 @@ import FormWrapper from "../components/form/FormWrapper";
 import CustomField from "../components/form/CustomField";
 
 const UpdateAnimal = () => {
-  const data = useLoaderData();
-  const { id, toto } = useParams();
-  console.log(toto);
+  // const data = useLoaderData();
+  // useselector
+  const { id } = useParams();
   const navigate = useNavigate();
   const iniatialValues = {
     name: data.name,
