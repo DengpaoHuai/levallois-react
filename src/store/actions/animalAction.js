@@ -3,7 +3,7 @@ import crudcrud from "../../services/crudcrud.instance";
 export const SET_ALL_ANIMALS = "SET_ALL_ANIMALS";
 export const DELETE_ANIMAL = "DELETE_ANIMAL";
 export const CREATE_ANIMAL = "CREATE_ANIMAL";
-
+export const EDIT_ANIMAL = "EDIT_ANIMAL";
 export const setAll = () => {
   return function (dispatch) {
     return crudcrud
@@ -33,6 +33,20 @@ export const createAnimalRedux = (animal) => {
       dispatch({
         type: CREATE_ANIMAL,
         payload: response.data,
+      });
+    });
+  };
+};
+
+export const editAnimalById = (id, animal) => {
+  return function (dispatch) {
+    return crudcrud.put("animals/" + id, animal).then(() => {
+      dispatch({
+        type: EDIT_ANIMAL,
+        payload: {
+          id,
+          animal,
+        },
       });
     });
   };

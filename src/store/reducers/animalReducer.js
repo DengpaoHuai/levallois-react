@@ -1,6 +1,7 @@
 import {
   CREATE_ANIMAL,
   DELETE_ANIMAL,
+  EDIT_ANIMAL,
   SET_ALL_ANIMALS,
 } from "../actions/animalAction";
 
@@ -27,6 +28,21 @@ const animalReducer = (state = initialState, action) => {
       return {
         ...state,
         animals: [...state.animals, action.payload],
+      };
+    case EDIT_ANIMAL:
+      let temp = state.animals;
+      console.log(temp);
+      let index = state.animals.findIndex(
+        (item) => item._id === action.payload.id
+      );
+      temp[index] = {
+        ...temp[index],
+        ...action.payload.animal,
+      };
+      console.log(temp);
+      return {
+        ...state,
+        animals: temp,
       };
     default:
       return state;

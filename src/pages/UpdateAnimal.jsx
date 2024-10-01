@@ -5,22 +5,28 @@ import * as Yup from "yup";
 import { createAnimal, updateAnimal } from "../services/animal.service";
 import FormWrapper from "../components/form/FormWrapper";
 import CustomField from "../components/form/CustomField";
+import { useDispatch, useSelector } from "react-redux";
+import { editAnimalById } from "../store/actions/animalAction";
 
 const UpdateAnimal = () => {
   // const data = useLoaderData();
   // useselector
+  const dispatch = useDispatch();
   const { id } = useParams();
+  const animal = useSelector((state) =>
+    state.animals.find((item) => item._id === id)
+  );
   const navigate = useNavigate();
   const iniatialValues = {
-    name: data.name,
-    classification: data.classification,
-    designation: data.designation,
-    averageHeight: data.averageHeight,
+    name: animal.name,
+    classification: animal.classification,
+    designation: animal.designation,
+    averageHeight: animal.averageHeight,
   };
 
   const onSubmit = (values) => {
     console.log(values);
-    updateAnimal(id, values).then(() => {
+    dispatch(editAnimalById(id, values)).then(() => {
       navigate("/animals");
     });
   };
