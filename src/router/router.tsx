@@ -23,15 +23,15 @@ const router = createBrowserRouter([
     element: <AnimalsScreen></AnimalsScreen>,
   },
   {
-    path: "/update-animal/:id/:toto?",
-    loader: async ({ params }) => {
-      const response = await fetch(
+    path: "/update-animal/:id",
+    /*loader: async ({ params }) => {
+    const response = await fetch(
         "https://crudcrud.com/api/b680a69bf8054e18bf625f1f75626985/animals/" +
           params.id
       );
       const data = await response.json();
       return data;
-    },
+    },*/
     element: <UpdateAnimal></UpdateAnimal>,
   },
 ]);

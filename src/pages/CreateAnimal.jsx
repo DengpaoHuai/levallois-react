@@ -5,9 +5,13 @@ import * as Yup from "yup";
 import { createAnimal } from "../services/animal.service";
 import FormWrapper from "../components/form/FormWrapper";
 import CustomField from "../components/form/CustomField";
+import { useDispatch } from "react-redux";
+import { createAnimalRedux } from "../store/actions/animalAction";
 
 const CreateAnimal = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const iniatialValues = {
     name: "",
     classification: "",
@@ -15,9 +19,11 @@ const CreateAnimal = () => {
     averageHeight: "",
   };
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     console.log(values);
-    createAnimal(values).then(() => {
+    dispatch(createAnimalRedux(values)).then((animal) => {
+      console.log(animal);
+
       navigate("/animals");
     });
   };

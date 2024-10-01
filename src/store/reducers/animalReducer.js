@@ -1,4 +1,8 @@
-import { DELETE_ANIMAL, SET_ALL_ANIMALS } from "../actions/animalAction";
+import {
+  CREATE_ANIMAL,
+  DELETE_ANIMAL,
+  SET_ALL_ANIMALS,
+} from "../actions/animalAction";
 
 const initialState = {
   animals: [],
@@ -18,6 +22,11 @@ const animalReducer = (state = initialState, action) => {
         animals: state.animals.filter(
           (animal) => animal._id !== action.payload
         ),
+      };
+    case CREATE_ANIMAL:
+      return {
+        ...state,
+        animals: [...state.animals, action.payload],
       };
     default:
       return state;

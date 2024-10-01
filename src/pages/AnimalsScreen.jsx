@@ -10,9 +10,7 @@ const AnimalsScreen = () => {
 
   useEffect(() => {
     if (animals.length > 0) return;
-    fetch("https://crudcrud.com/api/b680a69bf8054e18bf625f1f75626985/animals")
-      .then((response) => response.json())
-      .then((data) => dispatch(setAll(data)));
+    dispatch(setAll());
   }, []);
 
   return (
