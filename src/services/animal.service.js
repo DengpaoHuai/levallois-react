@@ -1,3 +1,5 @@
+import crudcrud from "./crudcrud.instance";
+
 export const createAnimal = async (animal) => {
   const response = await fetch(
     `https://crudcrud.com/api/${import.meta.env.VITE_KEY}/animals`,
@@ -34,4 +36,9 @@ export const updateAnimal = async (id, animal) => {
     }
   );
   return true;
+};
+
+export const getAllAnimals = async () => {
+  const response = await crudcrud.get("/animals");
+  return response;
 };

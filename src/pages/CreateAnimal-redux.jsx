@@ -7,11 +7,11 @@ import FormWrapper from "../components/form/FormWrapper";
 import CustomField from "../components/form/CustomField";
 import { useDispatch } from "react-redux";
 import { createAnimalRedux } from "../store/actions/animalAction";
-import useAnimals from "../zustand/useAnimalStore";
 
 const CreateAnimal = () => {
   const navigate = useNavigate();
-  const { addAnimal } = useAnimals();
+  const dispatch = useDispatch();
+
   const iniatialValues = {
     name: "",
     classification: "",
@@ -21,7 +21,7 @@ const CreateAnimal = () => {
 
   const onSubmit = async (values) => {
     console.log(values);
-    addAnimal(values).then((animal) => {
+    dispatch(createAnimalRedux(values)).then((animal) => {
       console.log(animal);
 
       navigate("/animals");
