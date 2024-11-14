@@ -7,6 +7,8 @@ import UpdateAnimal from "../pages/UpdateAnimal";
 import crudcrud from "../services/crudcrud.instance";
 import { useAnimalStore } from "../zustand/useAnimalStore";
 import { getAnimalsList } from "./loaders/animalsLoader";
+import DemoPage from "../pages/DemoPage";
+import WoafScreen from "../pages/WoafScreen";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ const router = createBrowserRouter([
     path: "/update-animal/:id",
     loader: getAnimalsList,
     element: <UpdateAnimal></UpdateAnimal>,
+  },
+  {
+    path: "/meow",
+    element: <DemoPage></DemoPage>,
+  },
+  {
+    path: "/woaf",
+    element: <WoafScreen></WoafScreen>,
   },
 ]);
 

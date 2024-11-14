@@ -9,8 +9,8 @@ import useFetch from "../hooks/useFetch";
 import useAnimals from "../zustand/useAnimalStore";
 
 const AnimalsScreen = () => {
-  // const { data: animals, isLoading } = useFetch(getAllAnimals);
-  const { animals, deleteAnimal } = useAnimals();
+  const { data: animals, isLoading } = useFetch(getAllAnimals);
+  //const { animals, deleteAnimal } = useAnimals();
 
   return (
     <div>
